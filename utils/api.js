@@ -18,6 +18,6 @@ export function submitCard (deckTitle, card) {
     .then(JSON.parse)
     .then(decks => {
       decks[deckTitle].cards.push(card)
-      return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(data))
+      return AsyncStorage.setItem(DECKS_STORAGE_KEY, JSON.stringify(decks))
     })
 }

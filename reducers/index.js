@@ -20,9 +20,9 @@ export default function decks (state = {}, action) {
     case TYPES.ADD_CARD:
       return {
         ...state,
-        [action.deck.title]: {
-          ...action.deck,
-          cards: [...state[action.deck.title].cards, action.deck.cards] // check if that works and if can be written
+        [action.deckTitle]: {
+          ...state[action.deckTitle],
+          cards: [...state[action.deckTitle].cards, action.card] // check if that works and if can be written
           // better
         }
       }

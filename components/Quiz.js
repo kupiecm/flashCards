@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { View, Text } from 'react-native'
-import { SuccessBtn, WrongBtn } from './Buttons'
+import { SuccessBtn, WrongBtn, SubmitBtn } from './Buttons'
+import { NavigationActions } from 'react-navigation'
 
-export default class Quiz extends Component {
+class Quiz extends Component {
 
   state = {
     currentCard: 0,
-    score: 0
+    score: 0,
+    showAnswer: false
   }
 
   submitAnswer (answer) {
@@ -20,8 +23,8 @@ export default class Quiz extends Component {
   }
 
   render () {
-    const { currentCard, score } = this.state
-    const { cards } = this.props.deck
+    const { currentCard, score, showAnswer } = this.state
+    const { deck, navigation } = this.props
 
     return (
       <View>
@@ -29,16 +32,29 @@ export default class Quiz extends Component {
         {currentCard === -1
           ? <View>
             <Text>You have finished your quiz!</Text>
-            <Text>{`Congratz! Your score is ${score} / ${cards.length}`}</Text>
+            <Text>{`Congratz! Your score is ${score} / ${deck.cards.length}`}</Text>
+            <SubmitBtn onPress={() => navigation.dispatch(NavigationActions.back())} text={`Done`}/>
           </View>
           : <View>
-            <Text>{`Question ${currentCard} / ${cards.length}: ${cards[currentCard].question}`}</Text>
-            <Text>{`Answer ${currentCard}: ${cards[currentCard].answer}`}</Text>
-            <SuccessBtn onPress={this.submitAnswer(true)}/>
-            <WrongBtn onPress={this.submitAnswer(false)}/>
+            {showAnswer
+              ? <Text>{`Answer ${currentCard + 1}: ${deck.cards[currentCard].answer}`}</Text>
+              : <Text>{`Question ${currentCard + 1} / ${deck.cards.length}: ${deck.cards[currentCard].question}`}</Text>
+            }
+            <Text onPress={() => this.setState({ showAnswer: !showAnswer })}>{showAnswer ? `Question` : `Answer`}</Text>
+            <SuccessBtn onPress={() => this.submitAnswer(true)}/>
+            <WrongBtn onPress={() => this.submitAnswer(false)}/>
           </View>
         }
       </View>
     )
   }
 }
+
+function mapStateToProps (state, { navigation }) {
+  const { deckTitle } = navigation.state.params
+  return {
+    deck: state[deckTitle]
+  }
+}
+
+export default connect(mapStateToProps)(Quiz)

@@ -8,16 +8,21 @@ class Decks extends Component {
 
   componentDidMount () {
     this.props.getDecks()
-    console.log(this.props.decks)
   }
 
   render () {
-    const { decks } = this.props
+    const { decks, navigation } = this.props
     return (
       <View>
         {decks &&
         decks.map(deck => {
-          return <DeckThumb key={deck.title} deck={deck}/>
+          return <DeckThumb
+            key={deck.title}
+            deck={deck}
+            onPress={() => navigation.navigate(
+              'Deck',
+              { deckTitle: deck.title }
+            )}/>
         })}
       </View>
     )

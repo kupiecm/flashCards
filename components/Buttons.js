@@ -14,13 +14,13 @@ const styles = StyleSheet.create({
     alignItems: 'center'
   },
   submitBtn: {
-    backgroundColor: purple,
+    backgroundColor: purple
   },
   successBtn: {
-    backgroundColor: green,
+    backgroundColor: green
   },
   wrongBtn: {
-    backgroundColor: red,
+    backgroundColor: red
   },
   btnText: {
     color: white,
@@ -28,26 +28,33 @@ const styles = StyleSheet.create({
   }
 })
 
-export function SubmitBtn ({ onPress }) {
-  return (<TouchableOpacity
-    style={[styles.AndroidBtn, styles.submitBtn]}
-    onPress={onPress}>
-    <Text style={[styles.btnText, {fontSize: 22}]}>SUBMIT</Text>
-  </TouchableOpacity>)
+export function SubmitBtn ({ onPress, text, ...props }) {
+  return (
+    <TouchableOpacity
+      style={[styles.AndroidBtn, styles.submitBtn]}
+      onPress={onPress}
+      disabled={props.disabled}>
+      <Text style={[styles.btnText, { fontSize: 22 }]}>{text ? text : `SUBMIT`}</Text>
+    </TouchableOpacity>
+  )
 }
 
 export function SuccessBtn ({ onPress }) {
-  return (<TouchableOpacity
-    style={[styles.AndroidBtn, styles.successBtn]}
-    onPress={onPress}>
-    <Text style={[styles.btnText, {fontSize: 18}]}>Right</Text>
-  </TouchableOpacity>)
+  return (
+    <TouchableOpacity
+      style={[styles.AndroidBtn, styles.successBtn]}
+      onPress={onPress}>
+      <Text style={[styles.btnText, { fontSize: 18 }]}>Right</Text>
+    </TouchableOpacity>
+  )
 }
 
 export function WrongBtn ({ onPress }) {
-  return (<TouchableOpacity
-    style={[styles.AndroidBtn, styles.wrongBtn]}
-    onPress={onPress}>
-    <Text style={styles.btnText}>Wrong</Text>
-  </TouchableOpacity>)
+  return (
+    <TouchableOpacity
+      style={[styles.AndroidBtn, styles.wrongBtn]}
+      onPress={onPress}>
+      <Text style={styles.btnText}>Wrong</Text>
+    </TouchableOpacity>
+  )
 }

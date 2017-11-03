@@ -1,23 +1,33 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, StyleSheet } from 'react-native'
+import { View, Text, TextInput, StyleSheet } from 'react-native'
 import { white } from '../utils/colors'
 import { addDeck } from '../actions/index'
 import { SubmitBtn } from './Buttons'
 
 class NewDeck extends Component {
 
+  state = {
+    title: ''
+  }
+
   submit = () => {
+    const { title } = this.state
     const { dispatch, navigation } = this.props
-    dispatch(addDeck('totally'))
-    // console.log(navigation)
-    // navigation.navigate('Decks')
+
+    dispatch(addDeck(title))
+    navigation.navigate('Decks')
   }
 
   render () {
     return (
       <View>
         <Text>What is the title of your new deck?</Text>
+        <TextInput
+          style={{ height: 40 }}
+          placeholder="NEw deck title..."
+          onChangeText={title => this.setState({ title })}
+        />
         <SubmitBtn onPress={this.submit}/>
       </View>
     )
