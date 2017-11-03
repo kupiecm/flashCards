@@ -20,7 +20,7 @@ export const addDeck = title => dispatch => {
     .then(() => {
       return dispatch({
         type: TYPES.ADD_DECK,
-        title: title
+        deck: deck
       })
     })
     .catch(err => {
