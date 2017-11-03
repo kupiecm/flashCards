@@ -7,7 +7,8 @@ import { getDecks } from '../actions/index'
 class Decks extends Component {
 
   componentDidMount () {
-    getDecks()
+    this.props.getDecks()
+    console.log(this.props.decks)
   }
 
   render () {
@@ -16,7 +17,6 @@ class Decks extends Component {
       <View>
         {decks &&
         decks.map(deck => {
-          console.log(deck)
           return <DeckThumb key={deck.title} deck={deck}/>
         })}
       </View>

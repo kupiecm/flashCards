@@ -10,15 +10,13 @@ export default function decks (state = {}, action) {
       }
     case TYPES.ADD_DECK:
       const { title } = action.deck
-      return state[title] !== null
-        ? state
-        : {
-          ...state,
-          [title]: {
-            title: title,
-            cards: []
-          }
+      return state[title] ? state : {
+        ...state,
+        [title]: {
+          title: title,
+          cards: []
         }
+      }
     case TYPES.ADD_CARD:
       return {
         ...state,
