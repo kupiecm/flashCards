@@ -1,8 +1,9 @@
 import React from 'react'
-import { View, StatusBar, StyleSheet} from 'react-native'
+import { View, StatusBar, StyleSheet } from 'react-native'
 import { Provider } from 'react-redux'
 import store from './store'
 import { TabNavigator, StackNavigator } from 'react-navigation'
+import { setLocalNotification } from './utils/notifications'
 import { Constants } from 'expo'
 import { purple, white } from './utils/colors'
 
@@ -87,6 +88,11 @@ const MainNavigator = StackNavigator({
 })
 
 export default class App extends React.Component {
+
+  componentDidMount () {
+    setLocalNotification()
+  }
+
   render () {
     return (
       <Provider store={store}>
