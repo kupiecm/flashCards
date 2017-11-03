@@ -9,7 +9,7 @@ class NewDeck extends Component {
 
   submit = () => {
     const { dispatch, navigation } = this.props
-    dispatch(addDeck('oleasdasd'))
+    dispatch(addDeck('totally new deck'))
     // console.log(navigation)
     // navigation.navigate('Decks')
   }
