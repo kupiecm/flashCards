@@ -1,13 +1,14 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native'
-import { purple, white } from '../utils/colors'
+import { View, Text, StyleSheet } from 'react-native'
+import { white } from '../utils/colors'
 import { addDeck } from '../actions/index'
+import { SubmitBtn } from './Buttons'
 
 class NewDeck extends Component {
 
   submit = () => {
-    const {dispatch, navigation } = this.props
+    const { dispatch, navigation } = this.props
     dispatch(addDeck('oleasdasd'))
     // console.log(navigation)
     // navigation.navigate('Decks')
@@ -17,11 +18,7 @@ class NewDeck extends Component {
     return (
       <View>
         <Text>What is the title of your new deck?</Text>
-        <TouchableOpacity
-          style={styles.AndroidSubmitBtn}
-          onPress={this.submit}>
-          <Text style={styles.submitBtnText}>SUBMIT</Text>
-        </TouchableOpacity>
+        <SubmitBtn onPress={this.submit}/>
       </View>
     )
   }
@@ -37,22 +34,6 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     flex: 1,
     alignItems: 'center'
-  },
-  AndroidSubmitBtn: {
-    backgroundColor: purple,
-    padding: 10,
-    paddingLeft: 30,
-    paddingRight: 30,
-    height: 45,
-    borderRadius: 2,
-    alignSelf: 'flex-end',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  submitBtnText: {
-    color: white,
-    fontSize: 22,
-    textAlign: 'center'
   },
   center: {
     flex: 1,

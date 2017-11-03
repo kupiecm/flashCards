@@ -1,8 +1,12 @@
-import React from 'react'
-import { TouchableOpacity, Text } from 'react-native'
+import React, { Component } from 'react'
+import { View, Text } from 'react-native'
 
-export default Deck = ({ deck }) => (
-  <TouchableOpacity onPress={() => {}}>
-    <Text>{`I am deck ${deck.title} with ${deck.cards ? deck.cards.length : 0} cards`}</Text>
-  </TouchableOpacity>
-)
+export default class Deck extends Component {
+  render () {
+    return (
+      <View>
+        <Text>Deck</Text>
+      </View>
+    )
+  }
+}

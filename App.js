@@ -1,5 +1,5 @@
 import React from 'react'
-import { View, Text, StatusBar, StyleSheet} from 'react-native'
+import { View, StatusBar, StyleSheet} from 'react-native'
 import { Provider } from 'react-redux'
 import store from './store'
 import { TabNavigator, StackNavigator } from 'react-navigation'
@@ -7,7 +7,10 @@ import { Constants } from 'expo'
 import { purple, white } from './utils/colors'
 
 import Decks from './components/Decks'
+import Deck from './components/Deck'
 import NewDeck from './components/NewDeck'
+import NewCard from './components/NewCard'
+import Quiz from './components/Quiz'
 
 function CardsStatusBar ({ backgroundColor, ...props }) {
   return (
@@ -16,12 +19,6 @@ function CardsStatusBar ({ backgroundColor, ...props }) {
     </View>
   )
 }
-
-const Hello = () => (
-  <View>
-    <Text>Hello!</Text>
-  </View>
-)
 
 const Tabs = TabNavigator({
   Decks: {
@@ -60,8 +57,8 @@ const MainNavigator = StackNavigator({
   Home: {
     screen: Tabs
   },
-  AddCard: {
-    screen: Hello,
+  NewCard: {
+    screen: NewCard,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
@@ -70,7 +67,7 @@ const MainNavigator = StackNavigator({
     }
   },
   Deck: {
-    screen: Hello,
+    screen: Deck,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
@@ -79,7 +76,7 @@ const MainNavigator = StackNavigator({
     }
   },
   Quiz: {
-    screen: Hello,
+    screen: Quiz,
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
