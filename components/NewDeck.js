@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text, TextInput, StyleSheet } from 'react-native'
+import { KeyboardAvoidingView, Text, TextInput, StyleSheet } from 'react-native'
 import { white } from '../utils/colors'
 import { addDeck } from '../actions/index'
 import { SubmitBtn } from './Buttons'
@@ -20,16 +20,18 @@ class NewDeck extends Component {
   }
 
   render () {
+    const { title } = this.state
     return (
-      <View>
+      <KeyboardAvoidingView behavior='padding'>
         <Text>What is the title of your new deck?</Text>
         <TextInput
           style={{ height: 40 }}
-          placeholder="NEw deck title..."
+          placeholder="New deck title..."
+          value={title}
           onChangeText={title => this.setState({ title })}
         />
         <SubmitBtn onPress={this.submit}/>
-      </View>
+      </KeyboardAvoidingView>
     )
   }
 }
