@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View } from 'react-native'
+import { View, FlatList } from 'react-native'
 import DeckThumb from './DeckThumb'
 import { getDecks } from '../actions/index'
 
@@ -10,20 +10,23 @@ class Decks extends Component {
     this.props.getDecks()
   }
 
+  renderItem = ({ item }) => {
+    const { navigation } = this.props
+    return <DeckThumb
+      deck={item}
+      onPress={() => navigation.navigate(
+        'Deck',
+        { deckTitle: item.title }
+      )}/>
+  }
+
   render () {
-    const { decks, navigation } = this.props
+    const { decks } = this.props
     return (
       <View>
-        {decks &&
-        decks.map(deck => {
-          return <DeckThumb
-            key={deck.title}
-            deck={deck}
-            onPress={() => navigation.navigate(
-              'Deck',
-              { deckTitle: deck.title }
-            )}/>
-        })}
+        <FlatList
+          data={decks}
+          renderItem={this.renderItem}/>
       </View>
     )
   }
