@@ -8,6 +8,10 @@ import { white, red, gray } from '../utils/colors'
 
 class Quiz extends Component {
 
+  static navigationOptions = () => ({
+    title: `Quiz`
+  })
+
   state = {
     currentCard: 0,
     score: 0,

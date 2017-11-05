@@ -2,9 +2,13 @@ import React, { Component } from 'react'
 import { View, Text, StyleSheet } from 'react-native'
 import { connect } from 'react-redux'
 import { SubmitBtn, AddBtn } from './Buttons'
-import { white, black, gray } from '../utils/colors'
+import { gray } from '../utils/colors'
 
 class Deck extends Component {
+
+  static navigationOptions = ({navigation}) => ({
+    title: navigation.state.params.deckTitle
+  })
 
   render () {
     const { deck, navigation } = this.props

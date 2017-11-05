@@ -8,6 +8,10 @@ import { black, gray, white } from '../utils/colors'
 
 class NewCard extends Component {
 
+  static navigationOptions = () => ({
+    title: `Add Card`
+  })
+
   state = {
     question: '',
     answer: ''
