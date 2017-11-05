@@ -5,7 +5,7 @@ import store from './store'
 import { TabNavigator, StackNavigator } from 'react-navigation'
 import { setLocalNotification } from './utils/notifications'
 import { Constants } from 'expo'
-import { purple, white } from './utils/colors'
+import { purple, white, black } from './utils/colors'
 
 import Decks from './components/Decks'
 import Deck from './components/Deck'
@@ -39,17 +39,17 @@ const Tabs = TabNavigator({
     header: null
   },
   tabBarOptions: {
-    activeTintColor: white,
+    activeTintColor: purple,
     style: {
       height: 56,
-      backgroundColor: purple,
-      shadowColor: 'rgba(0, 0, 0, 0.24)',
-      shadowOffset: {
-        width: 0,
-        height: 3
-      },
-      shadowRadius: 6,
-      shadowOpacity: 1
+      backgroundColor: white,
+      // shadowColor: 'rgba(0, 0, 0, 0.24)',
+      // shadowOffset: {
+      //   width: 0,
+      //   height: 3
+      // },
+      // shadowRadius: 6,
+      // shadowOpacity: 1
     }
   }
 })
@@ -63,7 +63,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple
+        backgroundColor: black
       }
     }
   },
@@ -72,7 +72,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple
+        backgroundColor: black
       }
     }
   },
@@ -81,7 +81,7 @@ const MainNavigator = StackNavigator({
     navigationOptions: {
       headerTintColor: white,
       headerStyle: {
-        backgroundColor: purple
+        backgroundColor: black
       }
     }
   }
@@ -97,7 +97,7 @@ export default class App extends React.Component {
     return (
       <Provider store={store}>
         <View style={styles.container}>
-          <CardsStatusBar backgroundColor={purple} barStyle="light-content"/>
+          <CardsStatusBar backgroundColor={white} barStyle="light-content"/>
           <MainNavigator/>
         </View>
       </Provider>

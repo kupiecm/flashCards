@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, FlatList } from 'react-native'
+import { View, FlatList, StyleSheet } from 'react-native'
 import DeckThumb from './DeckThumb'
 import { getDecks } from '../actions/index'
+import { white } from '../utils/colors'
 
 class Decks extends Component {
-
   componentDidMount () {
     this.props.getDecks()
   }
@@ -13,6 +13,7 @@ class Decks extends Component {
   renderItem = ({ item }) => {
     const { navigation } = this.props
     return <DeckThumb
+      key={item.title}
       deck={item}
       onPress={() => navigation.navigate(
         'Deck',
@@ -23,7 +24,7 @@ class Decks extends Component {
   render () {
     const { decks } = this.props
     return (
-      <View>
+      <View style={styles.container}>
         <FlatList
           data={decks}
           renderItem={this.renderItem}/>
@@ -37,3 +38,11 @@ function mapStateToProps (state) {
 }
 
 export default connect(mapStateToProps, { getDecks })(Decks)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'stretch',
+    backgroundColor: white
+  }
+})
