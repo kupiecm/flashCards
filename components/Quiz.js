@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { View, Text } from 'react-native'
+import { ScrollView, View, Text, StyleSheet } from 'react-native'
 import { SuccessBtn, WrongBtn, SubmitBtn } from './Buttons'
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
+import { white, red, gray } from '../utils/colors'
 
 class Quiz extends Component {
 
@@ -34,25 +35,39 @@ class Quiz extends Component {
     const { deck, navigation } = this.props
 
     return (
-      <View>
-        <Text>Quiz</Text>
+      <ScrollView contentContainerStyle={styles.container}>
         {currentCard === deck.cards.length
-          ? <View>
-            <Text>You have finished your quiz!</Text>
-            <Text>{`Congratz! Your score is ${score} / ${deck.cards.length}`}</Text>
-            <SubmitBtn onPress={() => {navigation.dispatch(NavigationActions.back())}} text={`Done`}/>
+          ? <View style={[styles.box, styles.result]}>
+            <Text style={[styles.textCenter, styles.textRegular]}>You have finished your quiz!</Text>
+            <Text style={styles.textMutted}>{`Congratz! Your score is ${score}/${deck.cards.length}`}</Text>
+            <SubmitBtn
+              onPress={() => {
+                navigation.dispatch(NavigationActions.back())
+              }}
+              text={`Done`}
+            />
           </View>
           : <View>
-            {showAnswer
-              ? <Text>{`Answer ${currentCard + 1}: ${deck.cards[currentCard].answer}`}</Text>
-              : <Text>{`Question ${currentCard + 1} / ${deck.cards.length}: ${deck.cards[currentCard].question}`}</Text>
-            }
-            <Text onPress={() => this.setState({ showAnswer: !showAnswer })}>{showAnswer ? `Question` : `Answer`}</Text>
-            <SuccessBtn onPress={() => this.submitAnswer(true)}/>
-            <WrongBtn onPress={() => this.submitAnswer(false)}/>
+            <View style={styles.counter}>
+              <Text>{`${currentCard + 1} / ${deck.cards.length}`}</Text>
+            </View>
+            <View style={styles.box}>
+              <Text style={[styles.textCenter, styles.textBig]}>
+                {showAnswer ? deck.cards[currentCard].answer : deck.cards[currentCard].question}
+              </Text>
+              <Text
+                style={styles.hint}
+                onPress={() => this.setState({ showAnswer: !showAnswer })}>
+                {showAnswer ? `Question` : `Answer`}
+              </Text>
+            </View>
+            <View style={styles.box}>
+              <SuccessBtn onPress={() => this.submitAnswer(true)}/>
+              <WrongBtn onPress={() => this.submitAnswer(false)}/>
+            </View>
           </View>
         }
-      </View>
+      </ScrollView>
     )
   }
 }
@@ -65,3 +80,42 @@ function mapStateToProps (state, { navigation }) {
 }
 
 export default connect(mapStateToProps)(Quiz)
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    backgroundColor: white,
+    padding: 15,
+    paddingTop: 30
+  },
+  counter: {
+    flex: 1
+  },
+  box: {
+    flex: 2,
+    alignItems: 'center'
+  },
+  result: {
+    padding: 20,
+    paddingTop: 50
+  },
+  textCenter: {
+    textAlign: 'center'
+  },
+  textBig: {
+    fontSize: 28
+  },
+  textRegular: {
+    fontSize: 22
+  },
+  textMutted: {
+    color: gray,
+    fontSize: 14,
+    marginBottom: 20
+  },
+  hint: {
+    color: red,
+    fontSize: 12
+  }
+})

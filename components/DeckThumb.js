@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
     borderColor: gray
   },
   title: {
-    fontSize: 22
+    fontSize: 22,
+    textAlign: 'center'
   },
   cards: {
     fontSize: 16,
