@@ -26,7 +26,7 @@ class NewDeck extends Component {
           <Text style={styles.title}>What is the title of your new deck?</Text>
           <TextInput
             style={styles.input}
-            placeholder="Deck title..."
+            placeholder="Please do not put strange chars ;)"
             value={title}
             onChangeText={title => this.setState({ title })}
           />

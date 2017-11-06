@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { ScrollView, View, Text, StyleSheet } from 'react-native'
+import { ScrollView, View, Text, Animated, StyleSheet } from 'react-native'
 import { SuccessBtn, WrongBtn, SubmitBtn } from './Buttons'
 import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
@@ -14,8 +14,50 @@ class Quiz extends Component {
 
   state = {
     currentCard: 0,
-    score: 0,
-    showAnswer: false
+    score: 0
+  }
+
+  // https://github.com/browniefed/examples/blob/animated_basic/flip/animatedbasic/index.android.js#L71
+  componentWillMount () {
+    this.rotation = 0
+    this.animatedValue = new Animated.Value(0)
+    this.animatedValue.addListener(({ value }) => {
+      this.rotation = value
+    })
+    this.frontFlip = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['0deg', '180deg']
+    })
+    this.backFlip = this.animatedValue.interpolate({
+      inputRange: [0, 180],
+      outputRange: ['180deg', '360deg']
+    })
+
+    //https://github.com/facebook/react-native/issues/1973
+    this.frontOpacity = this.animatedValue.interpolate({
+      inputRange: [89, 90],
+      outputRange: [1, 0]
+    })
+    this.backOpacity = this.animatedValue.interpolate({
+      inputRange: [89, 90],
+      outputRange: [0, 1]
+    })
+  }
+
+  hint = () => {
+    if (this.rotation >= 90) {
+      Animated.spring(this.animatedValue, {
+        toValue: 0,
+        friction: 8,
+        tension: 10
+      }).start()
+    } else {
+      Animated.spring(this.animatedValue, {
+        toValue: 180,
+        friction: 8,
+        tension: 10
+      }).start()
+    }
   }
 
   submitAnswer (answer) {
@@ -32,14 +74,33 @@ class Quiz extends Component {
       currentCard: state.currentCard + 1,
       score: answer ? state.score + 1 : state.score
     }))
+
+    // upon answering, flip card to show question
+    this.animatedValue.setValue(0)
   }
 
   render () {
-    const { currentCard, score, showAnswer } = this.state
+    const { currentCard, score } = this.state
     const { deck, navigation } = this.props
 
+    const frontAnimation = {
+        transform: [
+          { rotateY: this.frontFlip }
+        ],
+      //https://github.com/facebook/react-native/issues/1973
+        opacity: this.frontOpacity,
+        zIndex: this.frontOpacity
+      },
+      backAnimation = {
+        transform: [
+          { rotateY: this.backFlip }
+        ],
+        opacity: this.backOpacity,
+        zIndex: this.backOpacity
+      }
+
     return (
-      <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.container}>
         {currentCard === deck.cards.length
           ? <View style={[styles.box, styles.result]}>
             <Text style={[styles.textCenter, styles.textRegular]}>You have finished your quiz!</Text>
@@ -56,14 +117,31 @@ class Quiz extends Component {
               <Text>{`${currentCard + 1} / ${deck.cards.length}`}</Text>
             </View>
             <View style={styles.box}>
-              <Text style={[styles.textCenter, styles.textBig]}>
-                {showAnswer ? deck.cards[currentCard].answer : deck.cards[currentCard].question}
-              </Text>
-              <Text
-                style={styles.hint}
-                onPress={() => this.setState({ showAnswer: !showAnswer })}>
-                {showAnswer ? `Question` : `Answer`}
-              </Text>
+              <Animated.View style={[styles.flipCard, frontAnimation]}>
+                <ScrollView>
+                  <Text style={[styles.textCenter, styles.textBig]}>
+                    {deck.cards[currentCard].question}
+                  </Text>
+                </ScrollView>
+                <Text
+                  style={styles.hint}
+                  onPress={this.hint}>
+                  Answer
+                </Text>
+              </Animated.View>
+              <Animated.View
+                style={[backAnimation, styles.flipCard, styles.flipCardBack]}>
+                <ScrollView>
+                  <Text style={[styles.textCenter, styles.textBig]}>
+                    {deck.cards[currentCard].answer}
+                  </Text>
+                </ScrollView>
+                <Text
+                  style={styles.hint}
+                  onPress={this.hint}>
+                  Question
+                </Text>
+              </Animated.View>
             </View>
             <View style={styles.box}>
               <SuccessBtn onPress={() => this.submitAnswer(true)}/>
@@ -71,7 +149,7 @@ class Quiz extends Component {
             </View>
           </View>
         }
-      </ScrollView>
+      </View>
     )
   }
 }
@@ -95,6 +173,16 @@ const styles = StyleSheet.create({
   },
   counter: {
     flex: 1
+  },
+  flipCard: {
+    width: 300,
+    maxHeight: 200,
+    alignItems: 'center',
+    justifyContent: 'center'
+  },
+  flipCardBack: {
+    position: 'absolute',
+    top: 0
   },
   box: {
     flex: 2,

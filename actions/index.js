@@ -13,7 +13,7 @@ export const getDecks = () => dispatch => {
 
 export const addDeck = title => dispatch => {
   let deck = {
-    title: title,
+    title: title.replace(/ /g,''),
     cards: []
   }
   return API.submitDeck(deck)
