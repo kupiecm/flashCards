@@ -5,6 +5,11 @@ import DeckThumb from './DeckThumb'
 import { getDecks } from '../actions/index'
 import { white } from '../utils/colors'
 
+/*
+  Main app's view. Lists all available decks. Each deck is a button to view detailed view of certain deck.
+  When changing view, title of the deck is sent to Deck component, where it is used to fetch whole deck info from state
+ */
+
 class Decks extends Component {
   componentDidMount () {
     this.props.getDecks()

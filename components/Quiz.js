@@ -6,6 +6,11 @@ import { NavigationActions } from 'react-navigation'
 import { clearLocalNotification, setLocalNotification } from '../utils/notifications'
 import { white, red, gray } from '../utils/colors'
 
+/*
+  Quiz component goes through all cards of the deck using counter in state.
+  Notification (learning reminder )is set when user finishes quiz (click RIGHT/INCORRECT button for last question).
+ */
+
 class Quiz extends Component {
 
   static navigationOptions = () => ({
@@ -17,8 +22,20 @@ class Quiz extends Component {
     score: 0
   }
 
-  // https://github.com/browniefed/examples/blob/animated_basic/flip/animatedbasic/index.android.js#L71
+  //
   componentWillMount () {
+    /*
+        Card flip animation was done based on this solution:
+          https://codedaily.io/screencasts/12/Create-a-Flip-Card-Animation-with-React-Native
+        RotateY property is changed based on interpolation of Animated Value.
+
+        Unfortunately property backfaceVisibility: 'hidden' does not work on Android platform -
+        https://github.com/facebook/react-native/issues/1973, so in addition to rotating card, the opacity was changed
+        to mock hiding back-side of the card. In addition, z-index had to be adjusted, so that the Answer/Question
+        button is not hidden by the View in the front (problem when question is of different length than answer
+        and Answer/Question buttons are at different height).
+    */
+
     this.rotation = 0
     this.animatedValue = new Animated.Value(0)
     this.animatedValue.addListener(({ value }) => {
@@ -87,7 +104,7 @@ class Quiz extends Component {
         transform: [
           { rotateY: this.frontFlip }
         ],
-      //https://github.com/facebook/react-native/issues/1973
+        //https://github.com/facebook/react-native/issues/1973
         opacity: this.frontOpacity,
         zIndex: this.frontOpacity
       },
@@ -95,13 +112,14 @@ class Quiz extends Component {
         transform: [
           { rotateY: this.backFlip }
         ],
+        //https://github.com/facebook/react-native/issues/1973
         opacity: this.backOpacity,
         zIndex: this.backOpacity
       }
 
     return (
       <View style={styles.container}>
-        {currentCard === deck.cards.length
+        {currentCard === deck.cards.length // end of the quiz
           ? <View style={[styles.box, styles.result]}>
             <Text style={[styles.textCenter, styles.textRegular]}>You have finished your quiz!</Text>
             <Text style={styles.textMutted}>{`Congratz! Your score is ${score}/${deck.cards.length}`}</Text>
@@ -157,7 +175,7 @@ class Quiz extends Component {
 function mapStateToProps (state, { navigation }) {
   const { deckTitle } = navigation.state.params
   return {
-    deck: state[deckTitle.replace(/ /g,'')]
+    deck: state[deckTitle.replace(/ /g, '')]
   }
 }
 

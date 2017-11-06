@@ -4,6 +4,10 @@ import { connect } from 'react-redux'
 import { SubmitBtn, AddBtn } from './Buttons'
 import { gray } from '../utils/colors'
 
+/*
+  Detailed view with Deck info. Displays title and cards number. To buttons 'add card' and 'quiz' navigate to
+  corresponding views
+ */
 class Deck extends Component {
 
   static navigationOptions = ({navigation}) => ({

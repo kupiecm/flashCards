@@ -8,6 +8,14 @@ import { white } from './utils/colors'
 import MainNavigator from './components/Navigation'
 import CardsStatusBar from './components/CardsStatusBar'
 
+/*
+  App component is built with StatusBar and MainNavigator component responsible for wrapping all app's views
+  to create user-friendly navigation. Everything is wrapped by provider to connect all components with redux store.
+  Redux is used together with AsyncStorage (utlis/api.js) to maintain app's state. On all actions like get, save cards,
+   decks,
+  additional save to AsyncStorage is done by calling API in redux actions.
+ */
+
 export default class App extends React.Component {
 
   componentDidMount () {
