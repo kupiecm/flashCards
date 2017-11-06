@@ -20,7 +20,7 @@ class NewCard extends Component {
   submit = () => {
     const { question, answer } = this.state
     const { navigation, addCard, deckTitle } = this.props
-    addCard(deckTitle, { question, answer })
+    addCard(deckTitle.replace(/ /g,''), { question, answer })
     navigation.dispatch(NavigationActions.back())
   }
 

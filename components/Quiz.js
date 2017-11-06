@@ -157,7 +157,7 @@ class Quiz extends Component {
 function mapStateToProps (state, { navigation }) {
   const { deckTitle } = navigation.state.params
   return {
-    deck: state[deckTitle]
+    deck: state[deckTitle.replace(/ /g,'')]
   }
 }
 

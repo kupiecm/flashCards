@@ -10,9 +10,10 @@ export default function decks (state = {}, action) {
       }
     case TYPES.ADD_DECK:
       const { title } = action.deck
-      return state[title] ? state : {
+      let deckName = title.replace(/ /g,'')
+      return state[deckName] ? state : {
         ...state,
-        [title]: {
+        [deckName]: {
           title: title,
           cards: []
         }

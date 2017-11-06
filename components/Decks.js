@@ -13,7 +13,6 @@ class Decks extends Component {
   renderItem = ({ item }) => {
     const { navigation } = this.props
     return <DeckThumb
-      key={item.title}
       deck={item}
       onPress={() => navigation.navigate(
         'Deck',
@@ -27,7 +26,9 @@ class Decks extends Component {
       <View style={styles.container}>
         <FlatList
           data={decks}
-          renderItem={this.renderItem}/>
+          renderItem={this.renderItem}
+          keyExtractor={(item, index) => index}
+        />
       </View>
     )
   }

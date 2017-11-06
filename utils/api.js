@@ -9,7 +9,7 @@ export function fetchDecks () {
 
 export function submitDeck (deck) {
   return AsyncStorage.mergeItem(DECKS_STORAGE_KEY, JSON.stringify({
-    [deck.title]: deck
+    [deck.title.replace(/ /g,'')]: deck
   }))
 }
 
