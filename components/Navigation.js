@@ -1,6 +1,6 @@
 import React from 'react'
 import { TabNavigator, StackNavigator } from 'react-navigation'
-import { white, black } from '../utils/colors'
+import { white, gray, black } from '../utils/colors'
 
 import Decks from './Decks'
 import Deck from './Deck'
@@ -27,9 +27,10 @@ const Tabs = TabNavigator({
   },
   tabBarOptions: {
     activeTintColor: black,
+    inactiveTintColor: gray,
     style: {
       height: 56,
-      backgroundColor: white,
+      backgroundColor: white
     }
   }
 })
