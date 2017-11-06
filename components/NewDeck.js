@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { NavigationActions } from 'react-navigation'
 import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet } from 'react-native'
 import { addDeck } from '../actions/index'
 import { SubmitBtn } from './Buttons'
@@ -16,21 +17,29 @@ class NewDeck extends Component {
     const { dispatch, navigation } = this.props
 
     dispatch(addDeck(title))
-    navigation.navigate('Decks')
+      .then(() => {
+        navigation.goBack()
+        /*  i did not figure out better way to changes screens from 'NewDeck' to 'Deck' in a way that later
+            user can go back from 'Deck' view to 'Decks' view without seeing intermediate screen 'NewDeck'.
+            With current solution, the transition 'NewDeck'->'Deck' might be not nice (visible 'Decks').
+        */
+        navigation.navigate('Deck', { deckTitle: title })
+        this.setState({ title: '' })
+      })
   }
 
   render () {
     const { title } = this.state
     return (
       <KeyboardAvoidingView behavior='padding' style={styles.container}>
-          <Text style={styles.title}>What is the title of your new deck?</Text>
-          <TextInput
-            style={styles.input}
-            placeholder="Please do not put strange chars ;)"
-            value={title}
-            onChangeText={title => this.setState({ title })}
-          />
-          <SubmitBtn onPress={this.submit}/>
+        <Text style={styles.title}>What is the title of your new deck?</Text>
+        <TextInput
+          style={styles.input}
+          placeholder="Please do not put strange chars ;)"
+          value={title}
+          onChangeText={title => this.setState({ title })}
+        />
+        <SubmitBtn onPress={this.submit} disabled={title === ''}/>
       </KeyboardAvoidingView>
     )
   }

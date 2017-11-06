@@ -61,6 +61,10 @@ class Quiz extends Component {
     })
   }
 
+  componentWillUnmount () {
+    this.animatedValue.removeAllListeners()
+  }
+
   hint = () => {
     if (this.rotation >= 90) {
       Animated.spring(this.animatedValue, {
@@ -131,7 +135,7 @@ class Quiz extends Component {
             />
             <SubmitBtn
               onPress={() => {
-                this.setState({currentCard: 0, score: 0})
+                this.setState({ currentCard: 0, score: 0 })
               }}
               text={`Start again`}
             />

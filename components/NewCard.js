@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
-import { KeyboardAvoidingView, View, TextInput, StyleSheet } from 'react-native'
+import { KeyboardAvoidingView, View, Text, TextInput, StyleSheet } from 'react-native'
 import { NavigationActions } from 'react-navigation'
 import { addCard } from '../actions/index'
 import { SubmitBtn } from './Buttons'
-import { black, gray, white } from '../utils/colors'
+import { black, gray, white, red } from '../utils/colors'
 
 class NewCard extends Component {
 
@@ -20,7 +20,7 @@ class NewCard extends Component {
   submit = () => {
     const { question, answer } = this.state
     const { navigation, addCard, deckTitle } = this.props
-    addCard(deckTitle.replace(/ /g,''), { question, answer })
+    addCard(deckTitle.replace(/ /g, ''), { question, answer })
     navigation.dispatch(NavigationActions.back())
   }
 
@@ -43,7 +43,13 @@ class NewCard extends Component {
           />
         </View>
         <View style={styles.submit}>
-          <SubmitBtn onPress={this.submit}/>
+          <Text
+            style={[styles.info, this.state.question !== '' && this.state.answer !== ''
+              ? { opacity: 0 }
+              : { opacity: 1 }]}>
+            Please, provide required inputs
+          </Text>
+          <SubmitBtn onPress={this.submit} disabled={question === '' || answer === ''}/>
         </View>
       </KeyboardAvoidingView>
     )
@@ -83,5 +89,10 @@ const styles = StyleSheet.create({
     margin: 10,
     paddingLeft: 10,
     paddingRight: 10
+  },
+  info: {
+    color: red,
+    fontSize: 12,
+    padding: 15
   }
 })

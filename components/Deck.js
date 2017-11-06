@@ -14,6 +14,14 @@ class Deck extends Component {
     title: navigation.state.params.deckTitle
   })
 
+  componentDidMount() {
+    const { deck, navigation } = this.props
+
+    if (!deck) {
+      navigation.navigate('Decks')
+    }
+  }
+
   render () {
     const { deck, navigation } = this.props
     return (
@@ -81,5 +89,4 @@ const styles = StyleSheet.create({
     fontSize: 18,
     color: gray
   }
-
 })

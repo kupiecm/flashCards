@@ -8,20 +8,18 @@ export function clearLocalNotification () {
 
 const NOTIFICATION_KEY = 'FlashCards:notifications'
 
-function createNotification () {
-  return {
-    title: 'Time to study!',
-    body: '👋 don\'t forget to learn new stuff today!',
-    android: {
-      sound: true,
-      priority: 'high',
-      sticky: false,
-      vibrate: true
-    }
+const createNotification = () => ({
+  title: 'Time to study!',
+  body: '👋 don\'t forget to learn new stuff today!',
+  android: {
+    sound: true,
+    priority: 'high',
+    sticky: false,
+    vibrate: true
   }
-}
+})
 
-export function setLocalNotification () {
+export const setLocalNotification = () => {
   AsyncStorage.getItem(NOTIFICATION_KEY)
     .then(JSON.parse)
     .then(data => {
