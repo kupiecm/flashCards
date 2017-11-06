@@ -129,6 +129,12 @@ class Quiz extends Component {
               }}
               text={`Done`}
             />
+            <SubmitBtn
+              onPress={() => {
+                this.setState({currentCard: 0, score: 0})
+              }}
+              text={`Start again`}
+            />
           </View>
           : <View>
             <View style={styles.counter}>
