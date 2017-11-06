@@ -26,6 +26,7 @@ and physical device - Xiaomi Redmi 3S Android version 6.0.1.
 
 ```shell
     $ cd flashCards
+    $ yarn global add create-react-native-app
     $ yarn start    
 ```
 Then, either scan the QR-code to run application on Android device or press 'a' to run application in Android emulator.
