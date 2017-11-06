@@ -13,6 +13,7 @@ These instructions will get you a copy of the project up and running on your loc
 * yarn 1.2.1
 * npm 5.5.1
 * Genymotion 2.11.0
+* Expo 2.0.0
 
 The application was built for Android platform. Tested using Genymotion on emulated Google Nexus 6P - 7.1.0 - API 25 1440x2560 
 and physical device - Xiaomi Redmi 3S Android version 6.0.1.
@@ -29,7 +30,7 @@ and physical device - Xiaomi Redmi 3S Android version 6.0.1.
     $ yarn install
     $ yarn start    
 ```
-Then, either scan the QR-code to run application on Android device or press 'a' to run application in Android emulator.
+Then, either scan the QR-code with Expo application to run the application on an Android device or press 'a' to run the application in an Android emulator.
 
 ## Contribution
 First of all, thanks for thinking of contributing to this project!
