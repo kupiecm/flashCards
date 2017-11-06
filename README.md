@@ -23,7 +23,7 @@ and physical device - Xiaomi Redmi 3S Android version 6.0.1.
 ```shell
     $ git clone https://github.com/kupiecm/flashCards.git
 ```
-#### Install and start the API server:
+#### Install and start the app:
 
 ```shell
     $ cd flashCards
